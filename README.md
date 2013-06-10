@@ -10,5 +10,5 @@
 8. Migrate the database: "heroku run rake db:migrate"
 9. Create a Twilio account
 10. Create a TwiML app and set the SMS Request URL to http://yourappname.herokuapp.com/twilio/receive.xml
-11. Create a Twilio phone number and set the SMS Applciation to your TwiML app
-12. Done!
+11. Create a Twilio phone number and set the SMS Application to your TwiML app
+12. Text 'RESTART' to your Twilio phone number
