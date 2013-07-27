@@ -38,6 +38,9 @@ GEM
       execjs
     coffee-script-source (1.6.2)
     diff-lcs (1.2.4)
+    dotenv (0.8.0)
+    dotenv-rails (0.8.0)
+      dotenv (= 0.8.0)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -140,6 +143,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
+  dotenv-rails
   foursquare2
   haml
   jquery-rails
