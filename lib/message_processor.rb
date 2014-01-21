@@ -13,18 +13,19 @@ module MessageProcessor
     elsif (message =~ /^\d{5}([\-]\d{4})?$/) # match Zip Codes
       person.restart
 
-      # center = center_for_zip_code(message)
-      # if (center)
-      #   listItems = fsq_client.list(ENV['FOURSQUARE_LIST_ID'],
-      #                               ll: "#{center['lat']},#{center['lng']}",
-      #                               sort: "nearby")[:listItems][:items]
-      # else
-      #   listItems = fsq_client.list(ENV['FOURSQUARE_LIST_ID'])[:listItems][:items]
-      # end
-      
-      listItems = fsq_client.list(ENV['FOURSQUARE_LIST_ID'])[:listItems][:items]
-     
-      listItems.length.times do |i|
+      center = center_for_zip_code(message)
+      if (center)
+        listItems = fsq_client.list(ENV['FOURSQUARE_LIST_ID'],
+                                    ll: "#{center['lat']},#{center['lng']}",
+                                    sort: "nearby")[:listItems][:items]
+      else
+        listItems = fsq_client.list(ENV['FOURSQUARE_LIST_ID'])[:listItems][:items]
+      end
+
+      # Show up to three of the closest locations. This prevents an exception
+      # being thrown if there are less than 3 venuues in the Foursquare list.
+      numberOfresponses = listItems.length < 3 ? listItems.length : 3
+      numberOfresponses.times do |i|
         v = Venue.find_or_create_by_foursquare_id(listItems[i][:venue][:id])
         v.name = listItems[i][:venue][:name]
         v.address = listItems[i][:venue][:location][:address]
@@ -35,7 +36,8 @@ module MessageProcessor
       person.closest_venues.each do |cv|
         response_messages << "#{cv.position + 1}. #{cv.venue.name}\n#{cv.venue.address}"
       end
-      response_messages << "Text '1', '2', or '3' to select a volunteer site."
+      
+      response_messages << "Text a number from above to select a volunteer site."
   
     elsif (person.closest_venues.count > 0 && params[:Body] =~ /^[123]$/) # Match 1, 2, or 3
       cv = person.closest_venues[params[:Body].to_i - 1]
