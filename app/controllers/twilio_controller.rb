@@ -2,6 +2,8 @@ require 'message_processor'
 
 class TwilioController < ApplicationController
   include MessageProcessor
+  
+  protect_from_forgery :except => ["receive"]
 
   def receive
     person = Person.find_or_create_by_phone_number(params[:From])
