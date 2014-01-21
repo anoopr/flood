@@ -9,6 +9,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'twilio-ruby'
 gem 'unicorn'
+gem 'protected_attributes'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
