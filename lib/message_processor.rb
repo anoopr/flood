@@ -22,7 +22,7 @@ module MessageProcessor
         listItems = fsq_client.list(ENV['FOURSQUARE_LIST_ID'])[:listItems][:items]
       end
      
-      3.times do |i|
+      listItems.length.times do |i|
         v = Venue.find_or_create_by_foursquare_id(listItems[i][:venue][:id])
         v.name = listItems[i][:venue][:name]
         v.address = listItems[i][:venue][:location][:address]
