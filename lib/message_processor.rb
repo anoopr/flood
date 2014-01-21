@@ -13,14 +13,16 @@ module MessageProcessor
     elsif (message =~ /^\d{5}([\-]\d{4})?$/) # match Zip Codes
       person.restart
 
-      center = center_for_zip_code(message)
-      if (center)
-        listItems = fsq_client.list(ENV['FOURSQUARE_LIST_ID'],
-                                    ll: "#{center['lat']},#{center['lng']}",
-                                    sort: "nearby")[:listItems][:items]
-      else
-        listItems = fsq_client.list(ENV['FOURSQUARE_LIST_ID'])[:listItems][:items]
-      end
+      # center = center_for_zip_code(message)
+      # if (center)
+      #   listItems = fsq_client.list(ENV['FOURSQUARE_LIST_ID'],
+      #                               ll: "#{center['lat']},#{center['lng']}",
+      #                               sort: "nearby")[:listItems][:items]
+      # else
+      #   listItems = fsq_client.list(ENV['FOURSQUARE_LIST_ID'])[:listItems][:items]
+      # end
+      
+      listItems = fsq_client.list(ENV['FOURSQUARE_LIST_ID'])[:listItems][:items]
      
       3.times do |i|
         v = Venue.find_or_create_by_foursquare_id(listItems[i][:venue][:id])
