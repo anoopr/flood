@@ -60,6 +60,8 @@ GEM
     multipart-post (1.2.0)
     pg (0.17.1)
     polyglot (0.3.3)
+    protected_attributes (1.0.5)
+      activemodel (>= 4.0.1, < 5.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -132,6 +134,7 @@ DEPENDENCIES
   haml
   jquery-rails
   pg
+  protected_attributes
   rails (= 4.0.2)
   rspec-rails (~> 2.0)
   sass-rails
